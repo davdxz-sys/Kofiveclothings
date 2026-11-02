@@ -20,13 +20,15 @@
   <button class="menu-button" id="menuButton" type="button" aria-label="Abrir menu">☰</button>
 </nav></div></header>
 <main>
-<section class="hero" id="inicio"><div class="container"><div class="hero-box glass">
-  <img class="hero-image" src="https://imgur.com/DYJUBeb.png" alt="KOFIVE — Coleção">
-  <div class="hero-overlay"></div><div class="hero-content">
-    <span class="hero-label">KOFIVE / DROP 01</span><h1>VISTA SUA <span>VISÃO.</span></h1>
-    <p>Estampas autorais para quem transforma identidade em estilo.</p>
-    <a href="#colecao" class="button button-primary">EXPLORAR COLEÇÃO <span>→</span></a>
-  </div><div class="hero-navigation"><span class="hero-dot active"></span><span class="hero-dot"></span><span class="hero-dot"></span></div>
+<section class="hero" id="inicio"><div class="container"><div class="hero-box glass" id="heroCarousel">
+  <img class="hero-image" id="heroImage" src="https://imgur.com/DYJUBeb.png" alt="KOFIVE — Coleção">
+  <div class="hero-overlay"></div><div class="hero-content" id="heroContent">
+    <span class="hero-label" id="heroLabel">KOFIVE / DROP 01</span><h1 id="heroTitle">VISTA SUA <span>VISÃO.</span></h1>
+    <p id="heroSubtitle">Estampas autorais para quem transforma identidade em estilo.</p>
+    <a href="#colecao" class="button button-primary" id="heroButton">EXPLORAR COLEÇÃO <span>→</span></a>
+  </div><div class="hero-navigation" id="heroNavigation"><span class="hero-dot active"></span><span class="hero-dot"></span><span class="hero-dot"></span></div>
+  <button class="hero-arrow hero-prev" id="heroPrev" type="button" aria-label="Banner anterior">‹</button>
+  <button class="hero-arrow hero-next" id="heroNext" type="button" aria-label="Próximo banner">›</button>
 </div></div></section>
 <div class="marquee"><div class="marquee-track"><span>KOFIVE</span><b>•</b><span>WEAR YOUR VISION</span><b>•</b><span>KOFIVE</span><b>•</b><span>WEAR YOUR VISION</span><b>•</b><span>KOFIVE</span></div></div>
 <section class="collection" id="colecao"><div class="container">
