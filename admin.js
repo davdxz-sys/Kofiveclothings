@@ -107,6 +107,7 @@ async function showAdmin(user) {
   loginStatusBox.textContent = "";
   $("adminEmail").textContent = user.email || "Administrador";
   await refreshProducts();
+  await refreshBanners();
 }
 
 $("loginForm").addEventListener("submit", async event => {
@@ -172,6 +173,71 @@ form.addEventListener("submit", async event => {
   clearForm();
   await refreshProducts();
 });
+
+
+// GERENCIAMENTO DOS BANNERS DA HOME
+let editingBannerId = null;
+const bannerForm = $("bannerForm");
+function bannerStatus(message, error = false) {
+  const el = $("bannerStatus"); el.textContent = message;
+  el.className = error ? "admin-status error" : "admin-status";
+}
+function clearBannerForm() {
+  bannerForm.reset(); $("bannerId").value = ""; editingBannerId = null;
+  $("bannerPosition").value = "1"; $("bannerActive").value = "true";
+  $("saveBanner").textContent = "ADICIONAR BANNER"; $("cancelBannerEdit").hidden = true;
+}
+async function refreshBanners() {
+  const { data, error } = await supabase.from("banners").select("*").order("position", {ascending:true});
+  if (error) { $("adminBanners").innerHTML = '<p class="admin-muted">Não foi possível carregar banners. Execute o SQL de configuração.</p>'; bannerStatus(error.message, true); return; }
+  $("adminBanners").innerHTML = (data || []).map(b => `
+    <article class="banner-admin-item">
+      <img src="${escapeAttr(b.image_url)}" alt="">
+      <div><strong>${escapeHTML(b.title)} ${b.highlight ? escapeHTML(b.highlight) : ""}</strong><small>Ordem ${b.position} · ${b.active ? "Ativo" : "Desativado"}</small></div>
+      <div class="admin-product-actions">
+        <button class="admin-secondary" type="button" data-banner-edit="${b.id}">EDITAR</button>
+        <button class="admin-danger" type="button" data-banner-delete="${b.id}">EXCLUIR</button>
+      </div>
+    </article>`).join("") || '<p class="admin-muted">Nenhum banner cadastrado.</p>';
+  $("adminBanners").querySelectorAll("[data-banner-edit]").forEach(btn => btn.addEventListener("click", () => {
+    const b = data.find(x => String(x.id) === btn.dataset.bannerEdit); if (!b) return;
+    editingBannerId = b.id; $("bannerId").value = b.id;
+    $("bannerLabel").value = b.label || ""; $("bannerImage").value = b.image_url || "";
+    $("bannerTitle").value = b.title || ""; $("bannerHighlight").value = b.highlight || "";
+    $("bannerSubtitle").value = b.subtitle || ""; $("bannerButtonText").value = b.button_text || "";
+    $("bannerButtonUrl").value = b.button_url || ""; $("bannerPosition").value = b.position || 1;
+    $("bannerActive").value = String(b.active); $("saveBanner").textContent = "SALVAR BANNER";
+    $("cancelBannerEdit").hidden = false; bannerForm.scrollIntoView({behavior:"smooth",block:"center"});
+  }));
+  $("adminBanners").querySelectorAll("[data-banner-delete]").forEach(btn => btn.addEventListener("click", async () => {
+    if (!confirm("Excluir este banner?")) return;
+    const { error } = await supabase.from("banners").delete().eq("id", btn.dataset.bannerDelete);
+    if (error) bannerStatus("Erro ao excluir: " + error.message, true);
+    else { bannerStatus("Banner excluído."); if (String(editingBannerId) === btn.dataset.bannerDelete) clearBannerForm(); await refreshBanners(); }
+  }));
+}
+bannerForm?.addEventListener("submit", async event => {
+  event.preventDefault();
+  const image = $("bannerImage").value.trim();
+  if (!validImageUrl(image)) { bannerStatus("Use um link HTTPS direto do Imgur.", true); return; }
+  const payload = {
+    label: $("bannerLabel").value.trim(), image_url: image,
+    title: $("bannerTitle").value.trim(), highlight: $("bannerHighlight").value.trim(),
+    subtitle: $("bannerSubtitle").value.trim(), button_text: $("bannerButtonText").value.trim() || "EXPLORAR COLEÇÃO",
+    button_url: $("bannerButtonUrl").value.trim() || "#colecao",
+    position: Math.max(1, Number($("bannerPosition").value) || 1),
+    active: $("bannerActive").value === "true"
+  };
+  $("saveBanner").disabled = true; bannerStatus("Salvando banner...");
+  const result = editingBannerId
+    ? await supabase.from("banners").update(payload).eq("id", editingBannerId)
+    : await supabase.from("banners").insert(payload);
+  $("saveBanner").disabled = false;
+  if (result.error) { bannerStatus("Não foi possível salvar: " + result.error.message, true); return; }
+  bannerStatus(editingBannerId ? "Banner atualizado!" : "Banner adicionado!");
+  clearBannerForm(); await refreshBanners();
+});
+$("cancelBannerEdit")?.addEventListener("click", clearBannerForm);
 
 (async () => {
   const { data: { session } } = await supabase.auth.getSession();
