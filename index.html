@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="KOFIVE — Streetwear, identidade e estampas autorais.">
+  <meta name="theme-color" content="#050608">
+  <title>KOFIVE — Wear Your Vision</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="header"><div class="container"><nav class="navbar glass">
+  <a href="index.html" class="logo">KO<span>FIVE</span></a>
+  <div class="nav-links" id="navLinks">
+    <a href="#inicio" class="active">INÍCIO</a><a href="#colecao">COLEÇÃO</a><a href="#marca">NOSSA MARCA</a><a href="#ideia">SUA ESTAMPA</a>
+  </div>
+  <button class="menu-button" id="menuButton" type="button" aria-label="Abrir menu">☰</button>
+</nav></div></header>
+<main>
+<section class="hero" id="inicio"><div class="container"><div class="hero-box glass">
+  <img class="hero-image" src="https://imgur.com/DYJUBeb.png" alt="KOFIVE — Coleção">
+  <div class="hero-overlay"></div><div class="hero-content">
+    <span class="hero-label">KOFIVE / DROP 01</span><h1>VISTA SUA <span>VISÃO.</span></h1>
+    <p>Estampas autorais para quem transforma identidade em estilo.</p>
+    <a href="#colecao" class="button button-primary">EXPLORAR COLEÇÃO <span>→</span></a>
+  </div><div class="hero-navigation"><span class="hero-dot active"></span><span class="hero-dot"></span><span class="hero-dot"></span></div>
+</div></div></section>
+<div class="marquee"><div class="marquee-track"><span>KOFIVE</span><b>•</b><span>WEAR YOUR VISION</span><b>•</b><span>KOFIVE</span><b>•</b><span>WEAR YOUR VISION</span><b>•</b><span>KOFIVE</span></div></div>
+<section class="collection" id="colecao"><div class="container">
+  <div class="section-header"><div><span class="section-tag">/ 01 — COLEÇÃO</span><h2>Escolha sua <span>peça.</span></h2></div><p>Explore nossa primeira coleção. Cada peça foi criada para carregar uma identidade própria.</p></div>
+  <div class="filters">
+    <button class="filter active" data-filter="Todos" type="button">TODOS</button>
+    <button class="filter" data-filter="Oversized" type="button">OVERSIZED</button>
+    <button class="filter" data-filter="Classic" type="button">CLASSIC</button>
+    <button class="filter" data-filter="Limited" type="button">LIMITED</button>
+  </div>
+  <div class="products-grid" id="productsGrid"></div>
+</div></section>
+<section class="about" id="marca"><div class="container"><div class="about-grid glass"><div>
+  <span class="section-tag">/ 02 — KOFIVE</span><h2>NÃO É SÓ <span>ROUPA.</span></h2>
+  <p>A KOFIVE nasceu com uma ideia simples: transformar estampas em identidade. Nossa proposta é criar peças que tenham personalidade e que possam evoluir junto com nossa comunidade.</p>
+</div><div class="about-number"><span>K5</span><small>ESTILO<br>IDENTIDADE<br>VISÃO</small></div></div></div></section>
+<section class="idea" id="ideia"><div class="container"><div class="idea-box glass">
+  <span class="section-tag">/ 03 — PARTICIPE</span><h2>CRIE A PRÓXIMA <span>ESTAMPA.</span></h2>
+  <p>Tem uma ideia para uma camiseta? Mande sua sugestão para a KOFIVE.</p>
+  <form id="ideaForm">
+    <input type="text" id="ideaName" placeholder="Seu nome" required>
+    <input type="email" id="ideaEmail" placeholder="Seu e-mail" required>
+    <textarea id="ideaText" placeholder="Sua ideia de estampa..." required></textarea>
+    <button class="button button-primary" type="submit">ENVIAR IDEIA</button>
+  </form>
+</div></div></section>
+</main>
+<footer><div class="container footer"><div class="logo">KO<span>FIVE</span></div><p>© <span id="year"></span> KOFIVE. WEAR YOUR VISION.</p><div>INSTAGRAM · TIKTOK</div></div></footer>
+<div class="toast" id="toast"></div>
+<script type="module" src="script.js"></script>
+</body></html>
