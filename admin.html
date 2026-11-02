@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050608">
+  <title>KOFIVE — Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-body">
+  <header class="header">
+    <div class="container">
+      <nav class="navbar glass">
+        <a href="index.html" class="logo">KO<span>FIVE</span></a>
+        <a href="index.html" class="back-button">← VOLTAR À LOJA</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="admin-main container">
+    <section id="loginPanel" class="admin-login glass">
+      <span class="section-tag">/ KOFIVE — PRIVATE ACCESS</span>
+      <h1>PAINEL <span>ADMIN.</span></h1>
+      <p>Acesso restrito à administração da loja.</p>
+      <form id="loginForm" class="admin-form">
+        <label for="loginEmail">E-MAIL</label>
+        <input id="loginEmail" type="email" autocomplete="username" placeholder="Seu e-mail" required>
+        <label for="loginPassword">SENHA</label>
+        <input id="loginPassword" type="password" autocomplete="current-password" placeholder="Sua senha" required>
+        <button class="button button-primary" type="submit">ENTRAR NO PAINEL →</button>
+      </form>
+      <div id="loginStatus" class="admin-status" role="status"></div>
+    </section>
+
+    <section id="adminPanel" hidden>
+      <div class="admin-heading">
+        <div>
+          <span class="section-tag">/ KOFIVE — PRODUCT MANAGEMENT</span>
+          <h1>GERENCIAR <span>PRODUTOS.</span></h1>
+          <p>Logado como <strong id="adminEmail"></strong></p>
+        </div>
+        <button id="logoutButton" class="admin-secondary" type="button">SAIR</button>
+      </div>
+
+      <div class="admin-layout">
+        <section class="admin-editor glass">
+          <h2>NOVO PRODUTO</h2>
+          <form id="productForm" class="admin-form">
+            <input id="productId" type="hidden">
+            <label for="productName">NOME DO PRODUTO</label>
+            <input id="productName" type="text" placeholder="Ex.: K5 CORE BLACK" required maxlength="100">
+            <div class="admin-fields-two">
+              <div>
+                <label for="productCategory">CATEGORIA</label>
+                <select id="productCategory" required>
+                  <option value="Classic">Classic</option>
+                  <option value="Oversized">Oversized</option>
+                  <option value="Limited">Limited</option>
+                </select>
+              </div>
+              <div>
+                <label for="productPrice">PREÇO (R$)</label>
+                <input id="productPrice" type="text" inputmode="decimal" placeholder="129,90" required>
+              </div>
+            </div>
+            <label for="productDescription">DESCRIÇÃO</label>
+            <textarea id="productDescription" rows="4" placeholder="Descreva a peça, a modelagem e a estampa..."></textarea>
+            <label for="frontImage">LINK IMGUR — FRENTE</label>
+            <input id="frontImage" type="url" placeholder="https://i.imgur.com/arquivo.png">
+            <label for="backImage">LINK IMGUR — COSTAS</label>
+            <input id="backImage" type="url" placeholder="https://i.imgur.com/arquivo.png">
+            <p class="admin-hint">Use o link direto da imagem, normalmente começando com https://i.imgur.com/ e terminando em .png, .jpg ou .webp.</p>
+            <button id="saveProduct" class="button button-primary" type="submit">PUBLICAR PRODUTO</button>
+            <button id="cancelEdit" class="admin-secondary" type="button" hidden>CANCELAR EDIÇÃO</button>
+          </form>
+          <div id="adminStatus" class="admin-status" role="status"></div>
+        </section>
+
+        <section class="admin-inventory glass">
+          <div class="admin-inventory-heading">
+            <h2>PRODUTOS DA LOJA</h2>
+            <button class="admin-secondary" type="button" id="refreshProducts" onclick="location.reload()">ATUALIZAR</button>
+          </div>
+          <div id="adminProducts" class="admin-products">
+            <p class="admin-muted">Carregando produtos...</p>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+  <script type="module" src="admin.js"></script>
+</body>
+</html>
