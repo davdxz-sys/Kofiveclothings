@@ -39,11 +39,38 @@
       <div class="admin-heading">
         <div>
           <span class="section-tag">/ KOFIVE — PRODUCT MANAGEMENT</span>
-          <h1>GERENCIAR <span>PRODUTOS.</span></h1>
+          <h1>GERENCIAR <span>LOJA.</span></h1>
           <p>Logado como <strong id="adminEmail"></strong></p>
         </div>
         <button id="logoutButton" class="admin-secondary" type="button">SAIR</button>
       </div>
+
+      <section class="admin-editor glass" style="margin:24px 0">
+        <h2>GERENCIAR BANNERS DA PÁGINA INICIAL</h2>
+        <p class="admin-hint">Adicione imagens, títulos, frases e botões. A loja alterna automaticamente a cada 5 segundos.</p>
+        <form id="bannerForm" class="admin-form">
+          <input id="bannerId" type="hidden">
+          <label for="bannerLabel">ETIQUETA PEQUENA</label><input id="bannerLabel" maxlength="80" placeholder="KOFIVE / DROP 02">
+          <label for="bannerImage">LINK DIRETO DA IMAGEM (IMGUR)</label><input id="bannerImage" type="url" placeholder="https://i.imgur.com/imagem.png" required>
+          <div class="admin-fields-two">
+            <div><label for="bannerTitle">TÍTULO PRINCIPAL</label><input id="bannerTitle" maxlength="90" placeholder="VISTA SUA" required></div>
+            <div><label for="bannerHighlight">PALAVRA EM DESTAQUE AZUL</label><input id="bannerHighlight" maxlength="50" placeholder="VISÃO."></div>
+          </div>
+          <label for="bannerSubtitle">FRASE / SUBTÍTULO</label><textarea id="bannerSubtitle" rows="2" maxlength="220" placeholder="Estampas autorais para quem transforma identidade em estilo."></textarea>
+          <div class="admin-fields-two">
+            <div><label for="bannerButtonText">TEXTO DO BOTÃO</label><input id="bannerButtonText" maxlength="35" placeholder="EXPLORAR COLEÇÃO"></div>
+            <div><label for="bannerButtonUrl">DESTINO DO BOTÃO</label><input id="bannerButtonUrl" placeholder="#colecao"></div>
+          </div>
+          <div class="admin-fields-two">
+            <div><label for="bannerPosition">ORDEM</label><input id="bannerPosition" type="number" min="1" value="1"></div>
+            <div><label for="bannerActive">STATUS</label><select id="bannerActive"><option value="true">Ativo</option><option value="false">Desativado</option></select></div>
+          </div>
+          <button id="saveBanner" class="button button-primary" type="submit">ADICIONAR BANNER</button>
+          <button id="cancelBannerEdit" class="admin-secondary" type="button" hidden>CANCELAR EDIÇÃO</button>
+        </form>
+        <div id="bannerStatus" class="admin-status" role="status"></div>
+        <div id="adminBanners" class="banner-admin-list"><p class="admin-muted">Carregando banners...</p></div>
+      </section>
 
       <div class="admin-layout">
         <section class="admin-editor glass">
