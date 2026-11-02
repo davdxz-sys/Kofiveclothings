@@ -1816,3 +1816,33 @@ footer {
   .admin-product { align-items: flex-start; flex-wrap: wrap; }
   .admin-product-actions { width: 100%; padding-left: 70px; }
 }
+
+
+/* KOFIVE — HERO CAROUSEL */
+.hero-image { opacity: 1; transition: opacity .65s ease, transform 1s ease; }
+.hero-image.is-fading { opacity: 0; }
+.hero-content { transition: opacity .45s ease, transform .45s ease; }
+.hero-content.is-fading { opacity: 0; transform: translateY(12px); }
+.hero-arrow {
+ position:absolute; top:50%; transform:translateY(-50%); z-index:5;
+ width:42px;height:42px;border:1px solid rgba(255,255,255,.22);border-radius:50%;
+ background:rgba(5,8,14,.55);color:#fff;font-size:28px;cursor:pointer;
+ backdrop-filter:blur(8px);transition:.2s;
+}
+.hero-arrow:hover { background:var(--blue-dark); }
+.hero-prev { left:18px; } .hero-next { right:18px; }
+.hero-navigation { z-index:6; }
+.hero-dot { border:0;padding:0;cursor:pointer; }
+@media(max-width:700px) {
+ .hero-box { min-height:520px; height:68vh; }
+ .hero-content { left:24px; right:24px; bottom:65px; }
+ .hero-prev { left:10px; } .hero-next { right:10px; }
+ .hero-arrow { width:34px;height:34px;font-size:23px; }
+}
+/* Banner management */
+.banner-admin-list { display:grid;gap:12px;margin-top:16px; }
+.banner-admin-item { display:grid;grid-template-columns:90px 1fr auto;gap:12px;align-items:center;padding:10px;border:1px solid var(--border);border-radius:12px; }
+.banner-admin-item img { width:90px;height:65px;object-fit:cover;border-radius:8px; }
+.banner-admin-item strong,.banner-admin-item small { display:block; }
+.banner-admin-item small { color:var(--gray);margin-top:4px; }
+@media(max-width:560px){.banner-admin-item{grid-template-columns:70px 1fr}.banner-admin-item img{width:70px;height:60px}.banner-admin-item .admin-product-actions{grid-column:1/-1}}
