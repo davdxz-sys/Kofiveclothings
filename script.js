@@ -216,3 +216,63 @@ if (productsGrid || productPage) {
     }
   });
 }
+
+
+// HERO CAROUSEL — banners managed from the admin panel
+let heroBanners = [];
+let heroIndex = 0;
+let heroTimer = null;
+async function loadHeroBanners() {
+  const image = document.getElementById("heroImage");
+  if (!image) return;
+  const { data, error } = await supabase.from("banners").select("*").eq("active", true).order("position", { ascending: true });
+  if (error) { console.warn("Banners não carregados; usando banner padrão.", error.message); return; }
+  heroBanners = data || [];
+  if (!heroBanners.length) return; // mantém o banner padrão já presente no HTML
+  renderHeroBanner(0, false);
+  if (heroBanners.length > 1) {
+    heroTimer = setInterval(() => renderHeroBanner((heroIndex + 1) % heroBanners.length, true), 5000);
+  }
+  document.getElementById("heroPrev")?.addEventListener("click", () => moveHero(-1));
+  document.getElementById("heroNext")?.addEventListener("click", () => moveHero(1));
+}
+function renderHeroBanner(index, fade = true) {
+  if (!heroBanners.length) return;
+  heroIndex = index;
+  const banner = heroBanners[index];
+  const image = document.getElementById("heroImage");
+  const content = document.getElementById("heroContent");
+  const apply = () => {
+    image.src = banner.image_url;
+    image.alt = banner.title || "KOFIVE";
+    document.getElementById("heroLabel").textContent = banner.label || "KOFIVE / DROP";
+    document.getElementById("heroTitle").textContent = banner.title || "";
+    if (banner.highlight) {
+      const title = document.getElementById("heroTitle");
+      title.innerHTML = `${escapeHTML(banner.title || "")} <span>${escapeHTML(banner.highlight)}</span>`;
+    }
+    document.getElementById("heroSubtitle").textContent = banner.subtitle || "";
+    const button = document.getElementById("heroButton");
+    button.textContent = banner.button_text || "EXPLORAR COLEÇÃO";
+    const arrow = document.createElement("span"); arrow.textContent = "→"; button.append(" ", arrow);
+    button.href = banner.button_url || "#colecao";
+    const nav = document.getElementById("heroNavigation");
+    nav.innerHTML = heroBanners.map((_, i) => `<button type="button" class="hero-dot ${i === index ? "active" : ""}" aria-label="Ir para banner ${i+1}" data-hero-index="${i}"></button>`).join("");
+    nav.querySelectorAll("[data-hero-index]").forEach(dot => dot.addEventListener("click", () => { stopHeroTimer(); renderHeroBanner(Number(dot.dataset.heroIndex), true); startHeroTimer(); }));
+  };
+  if (!fade) { apply(); return; }
+  image.classList.add("is-fading"); content.classList.add("is-fading");
+  setTimeout(() => { apply(); image.classList.remove("is-fading"); content.classList.remove("is-fading"); }, 350);
+}
+function moveHero(direction) {
+  if (!heroBanners.length) return;
+  stopHeroTimer();
+  renderHeroBanner((heroIndex + direction + heroBanners.length) % heroBanners.length, true);
+  startHeroTimer();
+}
+function stopHeroTimer() { if (heroTimer) clearInterval(heroTimer); }
+function startHeroTimer() {
+  stopHeroTimer();
+  if (heroBanners.length > 1) heroTimer = setInterval(() => renderHeroBanner((heroIndex + 1) % heroBanners.length, true), 5000);
+}
+loadHeroBanners();
